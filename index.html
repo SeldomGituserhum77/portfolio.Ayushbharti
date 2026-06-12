@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Author Portfolio | Ayush Bharti</title>
+
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Georgia", serif;
+        scroll-behavior: smooth;
+    }
+
+    body {
+        background: #0f0f0f;
+        color: #f5f5f5;
+        line-height: 1.6;
+    }
+
+    header {
+        height: 100vh;
+        background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.9)),
+        url('https://images.unsplash.com/photo-1524995997946-a1c2e315a42f') center/cover;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        padding: 20px;
+    }
+
+    header h1 {
+        font-size: 3.5rem;
+        letter-spacing: 2px;
+    }
+
+    header p {
+        margin-top: 10px;
+        font-size: 1.3rem;
+        opacity: 0.8;
+    }
+
+    section {
+        padding: 80px 20px;
+        max-width: 1100px;
+        margin: auto;
+    }
+
+    h2 {
+        font-size: 2.5rem;
+        margin-bottom: 20px;
+        border-left: 5px solid gold;
+        padding-left: 10px;
+    }
+
+    .about {
+        font-size: 1.1rem;
+        opacity: 0.9;
+    }
+
+    /* BOOKS */
+    .books {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+        margin-top: 30px;
+    }
+
+    .book {
+        background: #1a1a1a;
+        padding: 15px;
+        border-radius: 10px;
+        transition: 0.3s;
+    }
+
+    .book:hover {
+        transform: scale(1.05);
+        background: #222;
+    }
+
+    .book img {
+        width: 100%;
+        height: 360px;
+        object-fit: contain;
+        background: #0b0b0b;
+        border-radius: 10px;
+        padding: 8px;
+    }
+
+    .book h3 {
+        margin: 10px 0 5px;
+    }
+
+    .btn {
+        display: inline-block;
+        margin-top: 10px;
+        padding: 8px 15px;
+        background: gold;
+        color: black;
+        text-decoration: none;
+        border-radius: 5px;
+        font-weight: bold;
+        transition: 0.3s;
+    }
+
+    .btn:hover {
+        background: #d4af37;
+        transform: scale(1.05);
+    }
+
+    /* CONTACT */
+    .contact {
+        text-align: center;
+    }
+
+    input, textarea {
+        width: 100%;
+        padding: 10px;
+        margin: 10px 0;
+        border: none;
+        border-radius: 5px;
+    }
+
+    button {
+        padding: 10px 20px;
+        border: none;
+        background: gold;
+        cursor: pointer;
+        font-weight: bold;
+    }
+
+    footer {
+        text-align: center;
+        padding: 20px;
+        background: #000;
+        margin-top: 50px;
+    }
+
+    /* NAV + NETFLIX DRAWER */
+    nav {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        background: rgba(0,0,0,0.85);
+        backdrop-filter: blur(10px);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 25px;
+        z-index: 1000;
+    }
+
+    .logo {
+        color: gold;
+        font-size: 1.1rem;
+        letter-spacing: 1px;
+    }
+
+    .menu-toggle {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        cursor: pointer;
+    }
+
+    .menu-toggle span {
+        width: 25px;
+        height: 3px;
+        background: white;
+    }
+
+    .overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        background: rgba(0,0,0,0.6);
+        opacity: 0;
+        visibility: hidden;
+        transition: 0.3s;
+        z-index: 998;
+    }
+
+    .side-drawer {
+        position: fixed;
+        top: 0;
+        right: -280px;
+        width: 260px;
+        height: 100vh;
+        background: #0b0b0b;
+        display: flex;
+        flex-direction: column;
+        padding: 80px 25px;
+        gap: 20px;
+        transition: 0.35s ease;
+        z-index: 999;
+        border-left: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .side-drawer a {
+        color: white;
+        text-decoration: none;
+        font-size: 1.1rem;
+    }
+
+    .side-drawer a:hover {
+        color: gold;
+    }
+
+    .side-drawer.active {
+        right: 0;
+    }
+
+    .overlay.active {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .signature {
+    margin-top: 20px;
+    width: 260px;
+    max-width: 80%;
+}
+
+.signature {
+    margin-top: 18px;
+    width: 280px;
+    max-width: 85%;
+    filter: drop-shadow(0 0 6px rgba(201,168,106,0.25));
+}
+
+.signature svg {
+    width: 100%;
+    height: 90px;
+}
+
+#sigPath {
+    fill: none;
+    stroke: #c9a86a; /* premium gold tone */
+    stroke-width: 2.2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+
+    stroke-dasharray: 1400;
+    stroke-dashoffset: 1400;
+
+    animation: drawSignature 3.2s ease forwards;
+}
+
+@keyframes drawSignature {
+    to {
+        stroke-dashoffset: 0;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<nav>
+    <div class="logo">Ayush Bharti</div>
+
+    <div class="menu-toggle" onclick="toggleMenu(event)">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+
+    <div class="overlay" id="overlay" onclick="closeMenu()"></div>
+
+    <div class="side-drawer" id="drawer">
+        <a href="#home" onclick="closeMenu()">Home</a>
+        <a href="#about" onclick="closeMenu()">About</a>
+        <a href="#books" onclick="closeMenu()">Books</a>
+        <a href="#contact" onclick="closeMenu()">Contact</a>
+    </div>
+</nav>
+
+<header id="home">
+    <h1>Ayush Bharti</h1>
+    <p>Author • Storyteller • Dream Weaver</p>
+  
+</header>
+
+<section id="about">
+    <h2>About the Author</h2>
+    <p class="about">
+        Ayush Bharti a soulful musician, a passionate young writer and a published author, crafting stories that explore emotions, silence, longing, and truth. Having contributed to more than 250 anthologies. His journey as an author began with a simple dream — to turn feelings into words that stay forever in the reader's heart. Each book is a piece of his soul, written with depth and intention.
+        follow him on @bharti_ayushhofficial_
+    </p>
+</section>
+
+<section id="books">
+    <h3>Ayush Bharti's Books</h3>
+
+    <div class="books">
+
+        <div class="book">
+            <img src="https://rukminim2.flixcart.com/image/612/612/xif0q/book/k/e/9/where-the-heart-paused-the-lane-of-longing-original-imahz7pgpnqthbam.jpeg?q=70">
+            <h3>Where the Heart Paused</h3>
+            <p>Some books are read. Some books are felt. Where the Heart Paused (The Lane of Longing) is an intimate and deeply moving exploration of love, longing, loss, and the quiet resilience of the human heart. Written with poetic tenderness and emotional honesty, this book invites readers into the hidden spaces where memories linger, emotions remain unfinished, and healing unfolds slowly over time. Through reflective prose, heartfelt observations, and soul-stirring passages, the book captures the experience of loving deeply, losing quietly, and learning to carry both presence and absence within the same heart. It explores the emotions many people feel but rarely express—the ache of unanswered questions, the weight of unfinished goodbyes, and the longing for connections that continue to live within memory.</p>
+            <a class="btn" href="https://www.amazon.in/dp/9378259774" target="_blank">Amazon</a>
+            <a class="btn" href="https://www.flipkart.com/product/p/itme?pid=9789378259777" target="_blank">Flipkart</a>
+            <a class="btn" href="https://blueroseone.com/store/product/where-the-heart-paused-the-lane-of-longing" target="_blank">BlueRose Stores</a>
+        </div>
+
+        <div class="book">
+            <img src="https://m.media-amazon.com/images/I/41dOwkkRsHL._SY445_SX342_FMwebp_.jpg">
+            <h3>The Unseen Truth</h3>
+            <p>The Unseen Truth is a journey into the raw essence of reality, blend of English and Hindi. Ayush Bharti invites you to strip away illusion and stand face-to-face with what the world truly is. This book uncovers what we overlook, challenges what we blindly accept, and reconnects us with the truths buried beneath noise, ego, and distraction. Every page pulses with emotion, insight, and a calling to wake up. It's not just poetry or reflection it's a revelation of what it means to be human in a world that hides more than it shows. This is your invitation to see, to feel, to know. The unseen is now in your hands.</p>
+            <a class="btn" href="https://www.amazon.in/Unseen-Truth-Sachnama-Anant/dp/936707834X" target="_blank">Amazon</a>
+            <a class="btn" href="https://dl.flipkart.com/dl/unseen-truth-sachnama-anant-sachnama/p/itm3bc664ae4bd47" target="_blank">Flipkart</a>
+        </div>
+
+    </div>
+</section>
+
+<section id="contact">
+    <h2>Contact</h2>
+    <div class="contact">
+        <form onsubmit="return sendMessage(event)">
+           CONTACT US ON : <BR> PHONE : +91 89874 14982 / +91 87097 19196 <BR> EMAIL : ayushbharti.official123@gmail.com
+        </form>
+    </div>
+</section>
+
+<footer>
+    © 2026 Ayush Bharti | All Rights Reserved
+</footer>
+
+<script>
+function toggleMenu(e){
+    e.stopPropagation();
+    document.getElementById("drawer").classList.toggle("active");
+    document.getElementById("overlay").classList.toggle("active");
+}
+
+function closeMenu(){
+    document.getElementById("drawer").classList.remove("active");
+    document.getElementById("overlay").classList.remove("active");
+}
+
+document.addEventListener("click", function(e){
+    const drawer = document.getElementById("drawer");
+    const toggle = document.querySelector(".menu-toggle");
+
+    if(!drawer.contains(e.target) && !toggle.contains(e.target)){
+        closeMenu();
+    }
+});
+
+function sendMessage(e){
+    e.preventDefault();
+    alert("Message sent successfully. I will get back to you soon.");
+    e.target.reset();
+    return false;
+}
+</script>
+
+<script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+
+</body>
+</html>
